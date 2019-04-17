@@ -12,6 +12,10 @@ button:focus {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
 }
+.buttonsRow {
+    display: flex;
+    flex-direction: row;
+}
 .iconButton {
     height: 30px;
     width: 30px;
