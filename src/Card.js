@@ -5,9 +5,10 @@ import {deleteRecord, restoreRecord} from "./actions/recordingAction";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
-const mapStateToProps = state => {
+const mapStateToProps = store => {
     return {
-        news: state.news
+        user: store.user,
+        news: store.news
     };
 };
 
@@ -35,12 +36,12 @@ class Card extends Component {
         return (
             <div className="card">
                 <div className="leftAvatarPanel">
-                    <img className="avatar" src={this.record.avatar} alt="avatar"/>
+                    <img className="avatar" src={this.props.user.avatar} alt="avatar"/>
                 </div>
                 <div className="contentCard">
                     <span className="fullNameGroup">
-                        <div className="fullName">{this.record.fullName}</div>
-                        <span className="userName"> @ {this.record.userName}</span>
+                        <div className="fullName">{this.props.user.fullName}</div>
+                        <span className="userName"> @ {this.props.user.userName}</span>
                     </span>
                     <span className="hashTags">
                         {

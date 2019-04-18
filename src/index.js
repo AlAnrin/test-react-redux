@@ -13,7 +13,7 @@ const store = createStore(recordReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <App/>
     </Provider>, document.getElementById('root'));
 
 serviceWorker.unregister();

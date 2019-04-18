@@ -1,82 +1,70 @@
-import {ADD_RECORD, DELETE_RECORD, RESTORE_RECORD} from "../actions/recordingAction";
+import {ADD_RECORD, DELETE_RECORD, RESTORE_RECORD, SET_TOKEN, SET_NEWS, SET_USER_PROFILE, SET_OFFSET} from "../actions/recordingAction";
 
 const initialState = {
-    news: [
-        {
-            id: 0,
-            avatar: 'https://pbs.twimg.com/profile_images/1098464374971281409/efLvmdNn_bigger.jpg',
-            fullName: 'Sa ☆ Doujima X01',
-            userName: 'LStrikesArt',
-            hashTags: ['#voltron', '#sheith'],
-            text: '(sheith) a little moonlight swimming on an alien planet',
-            media: 'https://pbs.twimg.com/media/D4W_MMKUYAE6krp.jpg',
-            isDelete: false
-        },
-        {
-            id: 1,
-            avatar: 'https://pbs.twimg.com/profile_images/1098464374971281409/efLvmdNn_bigger.jpg',
-            fullName: 'Sa ☆ Doujima X01',
-            userName: 'LStrikesArt',
-            hashTags: ['#voltron', '#sheith'],
-            text: '(sheith) felt like revisiting this au :D',
-            media: 'https://pbs.twimg.com/media/D0fj4L8VsAAKmFv.jpg',
-            isDelete: false
-        },
-        {
-            id: 2,
-            avatar: 'https://pbs.twimg.com/profile_images/1098464374971281409/efLvmdNn_bigger.jpg',
-            fullName: 'Sa ☆ Doujima X01',
-            userName: 'LStrikesArt',
-            hashTags: ['#voltron', '#shiro'],
-            text: '',
-            media: 'https://pbs.twimg.com/media/D4RIvJaUIAAPGu9.jpg',
-            isDelete: false
-        },
-        {
-            id: 3,
-            avatar: 'https://pbs.twimg.com/profile_images/1098464374971281409/efLvmdNn_bigger.jpg',
-            fullName: 'Sa ☆ Doujima X01',
-            userName: 'LStrikesArt',
-            hashTags: ['#DC', '#Marvel', '#wonderwoman', '#captainamerica'],
-            text: 'Yours a self-sacrificing idiot too?',
-            media: 'https://pbs.twimg.com/media/DBj1KmQV0AEBeip.jpg',
-            isDelete: false
-        },
-        {
-            id: 4,
-            avatar: 'https://pbs.twimg.com/profile_images/1098464374971281409/efLvmdNn_bigger.jpg',
-            fullName: 'Sa ☆ Doujima X01',
-            userName: 'LStrikesArt',
-            hashTags: ['#voltron', '#keith'],
-            text: `Last night I fell into the sunset...
-Into my heart... into my heartache
-Last night its spell held me so long`,
-            media: 'https://pbs.twimg.com/media/D33UmU7U4AAG60A.jpg',
-            isDelete: false
-        }
-    ]
+    version_id: 'v=5.95',
+    baseUrl: 'https://api.vk.com/method/',
+    scopes: 'photos',
+    client_id: '6950280',
+    token: null,
+    user: {
+        avatar: '',
+        fullName: '',
+        userName: ''
+    },
+    news: [],
+    offset: 0,
+    count: 15
 };
 
 export function recordReducer(state = initialState, action) {
     console.log(action.payload);
-    switch(action.type) {
+    switch (action.type) {
         case ADD_RECORD:
             return {
+                ...state,
                 news: [...state.news, action.payload]
             };
         case DELETE_RECORD:
             return {
+                ...state,
                 news: Object.assign([], state.news.map(record => record.id === action.payload.id ?
-                    { ...record, isDelete: true } :
+                    {...record, isDelete: true} :
                     record
                 ))
             };
         case RESTORE_RECORD:
             return {
+                ...state,
                 news: Object.assign([], state.news.map(record => record.id === action.payload.id ?
-                    { ...record, isDelete: false } :
+                    {...record, isDelete: false} :
                     record
                 ))
+            };
+        case SET_TOKEN:
+            return {
+                ...state,
+                token: action.payload
+            };
+        case SET_USER_PROFILE:
+            return{
+                ...state,
+                user: action.payload
+            };
+        case SET_NEWS:
+            return {
+                ...state,
+                news: Object.assign([], action.payload.map(item => Object.assign({}, {
+                    id: item.id,
+                    hashTags: Object.assign([], item.tags),
+                    text: item.text,
+                    media: item.sizes[item.sizes.length - 1].url,
+                    isDelete: false
+                })))
+            };
+        case SET_OFFSET:
+            return {
+                ...state,
+                offset: state.offset + action.payload
             };
         default:
             return state;

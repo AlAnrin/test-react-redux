@@ -109,11 +109,11 @@ button:focus {
 }
 .adaptiveMedia {
     margin-top: 10px;
-    width: 100%;
+    width: 90%;
 }
 .text {
     color: #222222;
     display: flex;
-    max-width: 100%;
+    max-width: 90%;
     line-height: 20px;
 }
