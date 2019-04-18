@@ -58,6 +58,7 @@ export function recordReducer(state = initialState, action) {
                     hashTags: Object.assign([], item.tags),
                     text: item.text,
                     media: item.sizes[item.sizes.length - 1].url,
+                    likes: item.likes.count, // TODO!
                     isDelete: false
                 })))
             };

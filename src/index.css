@@ -29,6 +29,15 @@ button:focus {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
 }
+.entryButton {
+    border: none;
+    background: #e6ecf0;
+    font-size: 20px;
+}
+.entryButton:hover {
+    color: black;
+    background: #d2d8dc;
+}
 .buttonsRow {
     display: flex;
     flex-direction: row;

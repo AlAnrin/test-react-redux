@@ -30,11 +30,13 @@ class App extends Component {
         let div;
 
         if (split.length === 1 && this.props.token === null) {
-            div = <button>
-                <a
-                    href={`https://oauth.vk.com/authorize?client_id=${this.props.client_id}&display=page&redirect_uri=http://localhost:3000/&scope=${this.props.scopes}&response_type=token&${this.props.version_id}`}
-                    className="btn btn-primary">Подключение к vk</a>
-            </button>;
+            div =
+                <button className="entryButton">
+                    <a
+                        href={`https://oauth.vk.com/authorize?client_id=${this.props.client_id}&display=page&redirect_uri=http://localhost:3000/&scope=${this.props.scopes}&response_type=token&${this.props.version_id}`}
+                        className="btn btn-primary">Подключение к vk</a>
+                </button>
+            ;
         } else {
             if (this.props.token === null) {
                 let split2 = split[1].split('&');
