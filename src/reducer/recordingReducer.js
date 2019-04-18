@@ -11,6 +11,7 @@ const initialState = {
         fullName: '',
         userName: ''
     },
+    news_count: 0,
     news: [],
     offset: 0,
     count: 15
@@ -51,9 +52,11 @@ export function recordReducer(state = initialState, action) {
                 user: action.payload
             };
         case SET_NEWS:
+            const [items, count] = action.payload;
             return {
                 ...state,
-                news: Object.assign([], action.payload.map(item => Object.assign({}, {
+                news_count: count,
+                news: Object.assign([], items.map(item => Object.assign({}, {
                     id: item.id,
                     hashTags: Object.assign([], item.tags),
                     text: item.text,
@@ -65,7 +68,7 @@ export function recordReducer(state = initialState, action) {
         case SET_OFFSET:
             return {
                 ...state,
-                offset: state.offset + action.payload
+                offset: action.payload
             };
         default:
             return state;

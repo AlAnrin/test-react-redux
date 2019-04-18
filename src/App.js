@@ -24,16 +24,14 @@ const mapDispatchToProps = dispatch => {
 class App extends Component {
     render() {
         let url = window.location.href;
-        console.log(url);
         let split = url.split('=');
-        console.log(split);
         let div;
 
         if (split.length === 1 && this.props.token === null) {
             div =
                 <button className="entryButton">
                     <a
-                        href={`https://oauth.vk.com/authorize?client_id=${this.props.client_id}&display=page&redirect_uri=http://localhost:3000/&scope=${this.props.scopes}&response_type=token&${this.props.version_id}`}
+                        href={`https://oauth.vk.com/authorize?client_id=${this.props.client_id}&display=page&scope=${this.props.scopes}&response_type=token&redirect_uri=${url}&${this.props.version_id}`}
                         className="btn btn-primary">Подключение к vk</a>
                 </button>
             ;

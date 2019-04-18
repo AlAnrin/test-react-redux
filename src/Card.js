@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from '@mdi/react';
-import { mdiDelete, mdiDeleteRestore } from '@mdi/js';
+import { mdiDelete, mdiDeleteRestore, mdiHeart } from '@mdi/js';
 import {deleteRecord, restoreRecord} from "./actions/recordingAction";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
@@ -53,6 +53,12 @@ class Card extends Component {
                     <span className="text">{this.record.text}</span>
                     <div className="adaptiveMedia">
                         <img className="adaptiveMedia" src={this.record.media} alt="media"/>
+                    </div>
+                    <div className="buttonsRow">
+                        <button className="iconButton heartButton">
+                            <Icon path={mdiHeart}/>
+                        </button>
+                        <span className="likesCount">{this.record.likes}</span>
                     </div>
                 </div>
                 <button className="iconButton deleteButton" onClick={this.handleClick}>

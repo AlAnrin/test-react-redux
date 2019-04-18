@@ -3,7 +3,7 @@ import './index.css';
 import Card from './Card';
 import { connect } from 'react-redux';
 import { Icon } from '@mdi/react';
-import { mdiPlus, mdiViewHeadline, mdiDeleteEmpty } from '@mdi/js';
+import { mdiPlus, mdiViewHeadline, mdiDeleteEmpty, mdiChevronDown, mdiChevronUp } from '@mdi/js';
 import {addNewRecord, setNews, setOffset, setUserProfile} from "./actions/recordingAction";
 import $ from 'jquery';
 
@@ -16,7 +16,8 @@ const mapStateToProps = store => {
         token: store.token,
         news: store.news,
         offset: store.offset,
-        count: store.count
+        count: store.count,
+        news_count: store.news_count
     };
 };
 
@@ -60,10 +61,11 @@ class Cards extends Component {
             method: 'GET',
             dataType: 'JSONP',
             success: (response) => {
-                let items = response.response.items;
-                this.props.setNews(items);
+                this.props.setNews([response.response.items, response.response.count]);
             }
         });
+        const elem = document.documentElement;
+        elem.scrollTop = 0;
     }
 
     addNewRecordBtnClick = e => {
@@ -89,9 +91,14 @@ class Cards extends Component {
         };
     }
 
-    handleOffsetClick = e => {
+    handleOffsetClickMore = e => {
         this.props.setOffset(this.props.offset + this.props.count);
-        this.getPhotos();
+        setTimeout(() => this.getPhotos(), 500);
+    };
+
+    handleOffsetClickLess = e => {
+        this.props.setOffset(this.props.offset - this.props.count);
+        setTimeout(() => this.getPhotos(), 500);
     };
 
     render() {
@@ -107,11 +114,22 @@ class Cards extends Component {
                     </button>
                 </div>
                 {
+                    (this.props.offset - this.props.count) >= 0 &&
+                    <button className="arrowButton" onClick={this.handleOffsetClickLess}>
+                        <Icon className="arrowIcon" path={mdiChevronUp}/>
+                    </button>
+                }
+                {
                     this.props.news.filter(record => ((this.state.isViewDelete && record.isDelete)
                     || (!this.state.isViewDelete && !record.isDelete))).map((item) =>
                         <Card key={item.id} item={item}/>)
                 }
-                {/*<button onClick={this.handleOffsetClick}>NEXT</button>*/}
+                {
+                    (this.props.offset + this.props.count) < this.props.news_count &&
+                    <button className="arrowButton" onClick={this.handleOffsetClickMore}>
+                        <Icon className="arrowIcon" path={mdiChevronDown}/>
+                    </button>
+                }
             </div>
         );
     }
