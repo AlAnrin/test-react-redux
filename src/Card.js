@@ -3,6 +3,7 @@ import { Icon } from '@mdi/react';
 import { mdiDelete, mdiDeleteRestore } from '@mdi/js';
 import {deleteRecord, restoreRecord} from "./actions/recordingAction";
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
 
 const mapStateToProps = state => {
     return {
@@ -60,4 +61,7 @@ class Card extends Component {
         )
     }
 }
+Card.propTypes = {
+    news: PropTypes.array.isRequired,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Card);

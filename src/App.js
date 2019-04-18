@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import './index.css';
 import Card from './Card';
 import { connect } from 'react-redux';
@@ -29,10 +28,12 @@ class App extends Component {
     }
 
     addNewRecordBtnClick = e => {
+        const last = this.props.news[this.props.news.length - 1];
         this.props.addAction({
-            avatar: '',
-            fullName: 'new',
-            userName: 'new',
+            id: last.id + 1,
+            avatar: last.avatar,
+            fullName: last.fullName,
+            userName: last.userName,
             hashTags: ['#new'],
             text: 'new',
             media: ''
